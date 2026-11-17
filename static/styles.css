@@ -1,0 +1,138 @@
+html {
+    background-color: #F0F3FF;
+    color: #040002;
+}
+
+body {
+    width: 90%;
+    margin: auto;
+}
+
+
+
+h1 {
+    
+    font-size: 2em;
+    text-align: center;
+    
+    color: #263088;
+    margin: 1em auto; 
+
+}
+
+p {
+    text-align: center;
+}
+
+header p {
+    text-align: right;
+}
+
+h2 {
+    text-align: center;
+    margin: 1em auto; 
+}
+
+#homepage{
+    display: flex;
+    justify-content: space-evenly;
+}
+section {    
+    width: 40%;
+}
+
+ 
+
+img{
+    display: block;
+    margin: 0 auto;
+    height: 15em;
+}
+
+td img{
+    height: 10em;
+}
+
+
+
+section a, p a{
+    background-color: #836FFF;
+    color: #15F5BA;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+
+th,td{
+    border: 1px solid black;
+}
+
+
+
+ul {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    padding-left: 0;
+    margin: auto;
+    list-style-type: none;
+}
+
+ul li {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    margin: 1em 0 0 0;
+    position: sticky;
+    top:0;
+    background-color: #211951;
+    z-index: 1000;
+}
+
+nav a {
+    font-size: 1.1em;
+    display: flex;
+    text-decoration: none;
+    padding: 0.2em 1em;
+    color: #15F5BA;
+}
+
+form {
+    width: 50%;
+    font-weight: bold;
+    margin: 1em 0;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin:1em auto;
+}
+
+.detail {
+    width: 50%;
+}
+
+table th, table td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+table th {
+    background-color: #836FFF;
+    color: #15F5BA;
+}   
+
+small a {
+    background-color: #F0F3FF;
+    color: black;
+    font-size: 1em;
+    text-decoration: underline;
+}

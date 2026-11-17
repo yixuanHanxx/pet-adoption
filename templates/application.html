@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+<h1>Your applications</h1>
+
+<table class="detail">
+    <caption>{{ caption }}</caption>
+    {% if applications %}
+    <tr>
+        <th>Pet Name</th>
+        <th>Application Status</th>
+    </tr>
+    {% endif %}
+    
+    {% for application in applications %} 
+    <tr>
+        <td>{{ application["name"] }}</td>
+        <td>{{ application["status"] }}</td>
+        {% if application["status"] == 'Completed' %}
+        {% if not has_reviewed[application['pet_id']] %}
+        <td>
+            
+            <form action="{{ url_for('application', pet_id=application['pet_id'], name = application['name'] )}}" method="POST">
+            <!-- create invisible input fields (hidden fields), 
+                get values from 'applications' being looped through -->
+            <!--<input type="hidden" name="pet_id" value="{{ application['pet_id'] }}">
+            <input type="hidden" name="name" value="{{ application['name'] }}">-->
+            {{ form.hidden_tag() }}
+            {{ form.review.label }}
+            {{ form.review() }}
+            {% for error in form.review.errors %}
+                {{ error }}
+            {% endfor %}            
+            <br>
+            {{ form.submit() }}
+            </form>
+            
+        </td>
+        {% endif %}
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+{% if applications %} 
+<p><a href="{{ url_for('delete_application', user_id=g.user) }}">Delete Ongoing Applications</a></p>
+{% endif %}
+
+{% endblock %}

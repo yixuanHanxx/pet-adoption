@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block main_content %}
+<h1>Volunteer applications</h1>
+{% for application in applications %}
+<article>
+  <p><strong>{{ application.user_id }}</strong> — {{ application.status }}</p>
+  <p>{{ application.reason }}</p>
+  {% if application.status == "Pending" %}
+  <form method="post" action="{{ url_for('decide_volunteer', application_id=application.application_id, decision='approve') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit">Approve</button>
+  </form>
+  <form method="post" action="{{ url_for('decide_volunteer', application_id=application.application_id, decision='reject') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <button type="submit">Reject</button>
+  </form>
+  {% endif %}
+</article>
+{% else %}<p>No applications.</p>{% endfor %}
+{% endblock %}

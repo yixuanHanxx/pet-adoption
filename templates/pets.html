@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+<h1>Our Pets</h1>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.speciesFilter.label }}
+    {{ form.speciesFilter() }}
+    {% for error in form.speciesFilter.errors %}
+        {{ error }}
+    {% endfor %}
+    <br>
+    {{ form.submit() }}
+</form>
+
+<table>
+    <tr>
+        
+        <th>Name</th>
+        <th>Age Group</th>
+        <th>Gender</th>
+        <th>Picture</th>
+        <th>See more</th>
+      </tr>
+    {% for pet in pets %} <!-- pets: a list -->
+    <tr>
+        
+        <td>{{ pet["name"] }}</td>
+        <td>{{ pet["age_group"] }}</td>
+        <td>{{ pet["gender"] }}</td>
+        <td><img src="{{ url_for('static', filename = pet['pic']) }}" alt="babies">
+        </td>
+        <td><a href="{{ url_for('pet', pet_id=pet['pet_id']) }}">
+            See details</a></td>
+    </tr>
+    {% endfor %}
+
+
+</table>
+{% endblock %}

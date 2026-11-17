@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+<h1>
+    Welcome!
+</h1>
+
+<p>We are an organization that focuses on rescuing stray dogs and cats, as well as helping them find a forever home.
+</p>
+<p>Come in and pick out your pet of choice or join us.</p>
+
+<div id="homepage">
+    <section>
+        <h2>Our pets</h2>
+        <img src="{{ url_for('static', filename='pets.jpg') }}" alt="our pets">
+
+        <P>Ready to meet a new furry friend? We rescue a wide variety of cats and dogs, from young babies to old babies.
+        </P>
+        <p>
+            <a href="{{ url_for('pets') }}">View our Pets</a>
+        </p>
+    </section>
+
+    <section>
+        <h2>Get Involved</h2>
+        <img src="{{ url_for('static', filename='help.jpg') }}" alt="get involved">
+        <P>We look forward to having you join us. We offer volunteers different opportunities to help these little
+            creatures.</P>
+        <p>
+            <a href="{{ url_for('volunteer') }}">Volunteer</a>
+        </p>
+    </section>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+
+<h1>Applications</h1>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    {{ form.application_filter.label }}
+    {{ form.application_filter() }}
+    {% for error in form.application_filter.errors %}
+        {{ error }}
+    {% endfor %}
+    <br>
+    {{ form.submit() }}
+</form>
+<table>
+    <tr>
+        <th>Application ID</th>
+        <th>User Name</th>
+        <th>Pet ID</th>
+        <th>Pet Name</th>
+        <th>Applicant First Name</th>
+        <th>Applicant Last Name</th>
+        <th>Applicant Address</th>
+        <th>Reason For Application</th>
+        <th>Status</th>
+        
+
+      </tr>
+    {% for application in applications %} 
+    <tr>
+        <td>{{ application["apl_id"] }}</td>
+        <td>{{ application["user_id"] }}</td>
+        <td>{{ application["pet_id"] }}</td>
+        <td>{{ application["name"] }}</td>
+        <td>{{ application["firstName"] }}</td>
+        <td>{{ application["lastName"] }}</td>
+        <td>{{ application["address"] }}</td>
+        <td>{{ application["reason"] }}</td>
+        <td>{{ application["status"] }}</td>
+        {% if application["status"] == 'Submitted'%}
+        <td><a href="{{ url_for('accept_visit',apl_id=application['apl_id']) }}">Accept Visit</a></td>
+        {% endif %}
+        {% if application["status"] == 'Processing'%}
+        <td>
+            <a href="{{ url_for('finish',apl_id=application['apl_id']) }}">Finish</a>
+            <br>OR<br>
+            <form method="POST"
+                action="{{ url_for('confirm_adoption') }}">
+
+                <input type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}">
+
+                <input type="hidden"
+                    name="pet_id"
+                    value="{{ application['pet_id'] }}">
+
+                <input type="hidden"
+                    name="apl_id"
+                    value="{{ application['apl_id'] }}">
+
+                <button type="submit">
+                    Confirm Adoption
+                </button>
+
+            </form>
+        </td>
+        {% endif %}
+        
+    </tr>
+    {% endfor %}
+
+
+</table>
+
+{% endblock %}
