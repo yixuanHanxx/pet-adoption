@@ -94,12 +94,10 @@ Enter the existing account's username and password when prompted. Run this utili
 ### Run the application
 
 ```powershell
-python -m flask --app app run --debug
+python -m flask run
 ```
 
 Open `http://127.0.0.1:5000` in your browser.
-
-Debug mode is for local development only.
 
 ## User roles
 

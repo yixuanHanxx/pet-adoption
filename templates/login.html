@@ -1,22 +1,41 @@
-{% extends "base.html" %}
-
-{% block main_content %}
-
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    {{ form.user_id.label }}
-    {{ form.user_id() }}
-    {% for error in form.user_id.errors %}
-        {{ error }}
-    {% endfor %}
-    <br>
-    {{ form.password.label }}
-    {{ form.password() }}
-    {% for error in form.password.errors %}
-        {{ error }}
-    {% endfor %}
-    <br>
-    {{ form.submit() }}
-</form>
-
+{% extends 'base.html' %}
+{% block title %}
+    Log in{% endblock %}{% block main_content %}
+    <section class="auth-page container">
+        <div class="auth-card">
+            <span class="eyebrow">
+                WELCOME BACK
+            </span>
+            <h1>
+                Good to see you again.
+            </h1>
+            <p class="muted">
+                Log in to continue your adoption journey.
+            </p>
+            <form method="post" novalidate class="stack-form">
+                {{ form.hidden_tag() }}
+                <div class="form-field">
+                    {{ form.user_id.label }}{{ form.user_id(placeholder='Your username') }}{% for error in form.user_id.errors %}
+                    <small class="field-error">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+            <div class="form-field">
+                {{ form.password.label }}{{ form.password(placeholder='Your password') }}{% for error in form.password.errors %}
+                <small class="field-error">
+                    {{ error }}
+                </small>
+            {% endfor %}
+        </div>
+        {{ form.submit(class_='btn btn-primary btn-full', value='Log in') }}
+    </form>
+    <p class="auth-switch">
+        New here?
+        <a href="{{ url_for('register') }}">
+            Create an account
+        </a>
+    </p>
+</div>
+</section>
 {% endblock %}

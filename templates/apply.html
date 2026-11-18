@@ -1,43 +1,45 @@
-{% extends "base.html" %}
-
-{% block main_content %}
-
-{% if form %}
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    {{ form.firstName.label }}
-    {{ form.firstName() }}
-    {% for error in form.firstName.errors %}
-        {{ error }}
-    {% endfor %}
-    <br>
-    {{ form.lastName.label }}
-    {{ form.lastName() }}
-    {% for error in form.lastName.errors %}
-        {{ error }}
-    {% endfor %}
-    <br>
-    {{ form.address.label }}
-    {{ form.address() }}
-    {% for error in form.address.errors %}
-        {{ error }}
-    {% endfor %}
-    <br>
-    {{ form.reason.label }}
-    {{ form.reason() }}
-    {% for error in form.reason.errors %}
-        {{ error }}
-    {% endfor %}
-    <br>
-    {{ form.submit() }}
-</form>
+{% extends 'base.html' %}
+{% block title %}
+    Apply for a visit{% endblock %}{% block main_content %}
+    <section class="page-intro container">
+        <span class="eyebrow">
+            TAKE THE NEXT STEP
+        </span>
+        <h1>
+            Apply for a visit
+            <span class="accent">
+                .
+            </span>
+        </h1>
+        <p>
+            Tell us a little about yourself so our team can get in touch.
+        </p>
+    </section>
+    <section class="container narrow-section">
+        {% if message %}
+            <div class="notice">
+                {{ message }}{% if not form %}
+                <p>
+                    Please wait for our staff to contact you.
+                </p>
+            {% endif %}
+        </div>
+    {% endif %}
+    {% if form %}
+        <div class="form-card">
+            <form method="post" novalidate class="stack-form">
+                {{ form.hidden_tag() }}{% for field in [form.firstName, form.lastName, form.address, form.reason] %}
+                <div class="form-field">
+                    {{ field.label }}{{ field() }}{% for error in field.errors %}
+                    <small class="field-error">
+                        {{ error }}
+                    </small>
+                {% endfor %}
+            </div>
+        {% endfor %}
+        {{ form.submit(class_='btn btn-primary', value='Submit application →') }}
+    </form>
+</div>
 {% endif %}
-
-{% if message %}
-<p>{{ message }}</p>
-<p>Please wait for our staff to contact you.</p>
-{% endif %}
-
-
-
+</section>
 {% endblock %}

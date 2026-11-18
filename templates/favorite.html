@@ -1,29 +1,77 @@
-{% extends "base.html" %}
-
-{% block main_content %}
-
-<h1>Your favorites</h1>
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
-{% if favorite %}
-<table class="detail">
-    {% for pet_id in favorite %}
-    <tr>
-        <td>{{ names[pet_id] }}</td>
-        <td><a href="{{ url_for('remove_from_favorite', pet_id=pet_id )}}">Remove</a></td>
-    </tr>
-    {% endfor %}
-</table>
-
-<p><a href="{{ url_for('pets') }}">See more</a></p>
-<p>Come apply for a visit and decide if you want to adopt!</p>
-<p><a href="{{ url_for('apply') }}">Apply a Visit</a></p>
-
-{% else %}
-<p>It's empty</p>
-<p><a href="{{ url_for('pets')}}">Come and select!</a></p>
-
-{% endif %}
-
+{% extends 'base.html' %}
+{% block title %}
+    My favorites{% endblock %}{% block main_content %}
+    <section class="page-intro container">
+        <span class="eyebrow">
+            THE ONES WHO STOLE YOUR HEART
+        </span>
+        <h1>
+            Your favorites
+            <span class="accent">
+                .
+            </span>
+        </h1>
+        <p>
+            All the furry friends you've saved in one place.
+        </p>
+    </section>
+    <section class="container page-section">
+        {% if message %}
+            <div class="notice">
+                {{ message }}
+            </div>
+        {% endif %}
+        {% if favorite %}
+            <div class="list-panel">
+                {% for pet_id in favorite %}
+                    <div class="favorite-row">
+                        <div>
+                            <span class="favorite-heart">
+                                ♥
+                            </span>
+                            <strong>
+                                {{ names[pet_id] }}
+                            </strong>
+                        </div>
+                        <a class="text-link" href="{{ url_for('remove_from_favorite', pet_id=pet_id) }}">
+                            Remove ×
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="action-strip">
+                <div>
+                    <h2>
+                        Ready to meet them?
+                    </h2>
+                    <p>
+                        Apply for a visit to take the next step.
+                    </p>
+                </div>
+                <a class="btn btn-primary" href="{{ url_for('apply') }}">
+                    Apply for a visit →
+                </a>
+            </div>
+            <p>
+                <a class="back-link" href="{{ url_for('pets') }}">
+                    ← Discover more pets
+                </a>
+            </p>
+        {% else %}
+            <div class="empty-state">
+                <span>
+                    ♡
+                </span>
+                <h2>
+                    Your favorites list is empty
+                </h2>
+                <p>
+                    Explore our lovely pets and save the ones you connect with.
+                </p>
+                <a class="btn btn-primary" href="{{ url_for('pets') }}">
+                    Explore pets →
+                </a>
+            </div>
+        {% endif %}
+    </section>
 {% endblock %}

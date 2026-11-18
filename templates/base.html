@@ -1,53 +1,108 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Pet Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>  
-    <header>
-        {% if g.user %}
-            <p>User id:{{ g.user }}</p>
-            <p><a href="{{ url_for('logout') }}">Logout</a></p>
-        {% else %}
-            <p><a href="{{ url_for('register') }}">Register</a></p>
-            <p><a href="{{ url_for('login') }}">Login</a></p>
-        {% endif %}
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}">Home page</a></li>
-            
-                <li><a href="{{ url_for('favorite') }}">Your favorites</a>
-                </li>
-                <li><a href="{{ url_for('application') }}">Your application</a></li>
-                {% if g.user and g.role == "user" %}<li><a href="{{ url_for('volunteer') }}">Become a volunteer</a></li>{% endif %}
-                {% if g.is_volunteer %}
-                <li>                    
-                        <a href="{{ url_for('manage_applications') }}">Manage applications</a>
-                </li>
-                {% endif %}
-                {% if g.role == "admin" %}
-                <li>                    
-                        <a href="{{ url_for('manage_volunteers') }}">Manage volunteers</a>
-                </li>
-                {% endif %}
-
-                
-            </ul>
-        </nav>  
-    </header>  
-    {% block main_content %} 
-    {% endblock %}   
-    <footer>
-        <p>
-            <small>© Copyright, Yixuan Han, 2024. All rights reserved.</small>
-
-        </p>
-        <p>
-            <small>Some images by: Milli, Ralu Gal, Oscar Sutton, Alec Favale, Austin Kehmeier, from <a href="https://unsplash.com/">Unsplash</a>.
-                </small>
-        </p>
-    </footer> 
-</body>
-</html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#f8f7f2">
+        <meta name="description" content="Find your new best friend and give a rescue pet a loving home.">
+        <title>
+            {% block title %}
+                Paw Haven{% endblock %} | Pet Adoption
+            </title>
+            <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        </head>
+        <body>
+            <header class="site-header">
+                <div class="container header-inner">
+                    <a class="brand" href="{{ url_for('index') }}" aria-label="Paw Haven home">
+                        <span class="brand-icon">
+                            ♥
+                        </span>
+                        pawhaven
+                        <span class="brand-dot">
+                            .
+                        </span>
+                    </a>
+                    <nav class="main-nav" aria-label="Main navigation">
+                        <a href="{{ url_for('index') }}">
+                            Home
+                        </a>
+                        <a href="{{ url_for('pets') }}">
+                            Find a pet
+                        </a>
+                        <a href="{{ url_for('favorite') }}">
+                            Favorites
+                        </a>
+                        <a href="{{ url_for('application') }}">
+                            My applications
+                        </a>
+                        {% if g.user and g.role == 'user' %}
+                            <a href="{{ url_for('volunteer') }}">
+                                Volunteer
+                            </a>
+                        {% endif %}
+                        {% if g.is_volunteer %}
+                            <a href="{{ url_for('manage_applications') }}">
+                                Manage adoptions
+                            </a>
+                        {% endif %}
+                        {% if g.role == 'admin' %}
+                            <a href="{{ url_for('manage_volunteers') }}">
+                                Volunteers
+                            </a>
+                        {% endif %}
+                    </nav>
+                    <div class="account-nav">
+                        {% if g.user %}
+                            <span class="user-chip">
+                                {{ g.user }}
+                            </span>
+                            <a class="btn btn-outline btn-sm" href="{{ url_for('logout') }}">
+                                Log out
+                            </a>
+                        {% else %}
+                            <a class="login-link" href="{{ url_for('login') }}">
+                                Log in
+                            </a>
+                            <a class="btn btn-primary btn-sm" href="{{ url_for('register') }}">
+                                Sign up
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </header>
+            <main id="main-content">
+                {% block main_content %}
+                {% endblock %}
+            </main>
+            <footer class="site-footer">
+                <div class="container footer-inner">
+                    <div>
+                        <a class="brand" href="{{ url_for('index') }}">
+                            <span class="brand-icon">
+                                ♥
+                            </span>
+                            pawhaven
+                            <span class="brand-dot">
+                                .
+                            </span>
+                        </a>
+                        <p>
+                            Helping little paws find their forever homes.
+                        </p>
+                    </div>
+                    <div class="footer-meta">
+                        <span>
+                            © 2024–2026 Paw Haven · Project by Yixuan Han
+                        </span>
+                        <span>
+                            Photography credits:
+                            <a href="https://unsplash.com/" target="_blank" rel="noopener noreferrer">
+                                Unsplash
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </footer>
+        </body>
+    </html>

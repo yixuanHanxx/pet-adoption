@@ -1,41 +1,90 @@
-{% extends "base.html" %}
-
-{% block main_content %}
-
-<h1>Our Pets</h1>
-<form action="" method="post" novalidate>
-    {{ form.hidden_tag() }}
-    {{ form.speciesFilter.label }}
-    {{ form.speciesFilter() }}
-    {% for error in form.speciesFilter.errors %}
-        {{ error }}
-    {% endfor %}
-    <br>
-    {{ form.submit() }}
-</form>
-
-<table>
-    <tr>
-        
-        <th>Name</th>
-        <th>Age Group</th>
-        <th>Gender</th>
-        <th>Picture</th>
-        <th>See more</th>
-      </tr>
-    {% for pet in pets %} <!-- pets: a list -->
-    <tr>
-        
-        <td>{{ pet["name"] }}</td>
-        <td>{{ pet["age_group"] }}</td>
-        <td>{{ pet["gender"] }}</td>
-        <td><img src="{{ url_for('static', filename = pet['pic']) }}" alt="babies">
-        </td>
-        <td><a href="{{ url_for('pet', pet_id=pet['pet_id']) }}">
-            See details</a></td>
-    </tr>
-    {% endfor %}
-
-
-</table>
+{% extends 'base.html' %}
+{% block title %}
+    Meet the pets{% endblock %}{% block main_content %}
+    <section class="page-intro container">
+        <span class="eyebrow">
+            YOUR NEXT BEST FRIEND
+        </span>
+        <h1>
+            Meet our lovely pets
+            <span class="accent">
+                .
+            </span>
+        </h1>
+        <p>
+            Each one has a unique story. Maybe you'll be part of their next chapter.
+        </p>
+    </section>
+    <section class="container page-section">
+        <div class="toolbar">
+            <div>
+                <h2>
+                    Available for adoption
+                </h2>
+                <p>
+                    Take your time. The right connection is worth waiting for.
+                </p>
+            </div>
+            <form method="post" class="filter-form">
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    <legend>
+                        Filter by
+                    </legend>
+                    {% for option in form.speciesFilter %}
+                        <label class="filter-choice">
+                            {{ option }}
+                            <span>
+                                {{ option.label.text|capitalize }}
+                            </span>
+                        </label>
+                    {% endfor %}
+                </fieldset>
+                {{ form.submit(class_='btn btn-primary btn-sm', value='Apply filter') }}
+            </form>
+        </div>
+        {% if pets %}
+            <div class="pet-grid">
+                {% for pet in pets %}
+                    <article class="pet-card">
+                        <a href="{{ url_for('pet', pet_id=pet['pet_id']) }}" class="pet-image-link">
+                            <img src="{{ url_for('static', filename=pet['pic']) }}" alt="{{ pet['name'] }}" loading="lazy">
+                        </a>
+                        <div class="pet-card-body">
+                            <span class="availability">
+                                <span class="availability-dot">
+                                </span>
+                                Looking for a home
+                            </span>
+                            <h3>
+                                {{ pet['name'] }}
+                            </h3>
+                            <p class="pet-meta">
+                                {{ pet['age_group']|capitalize }}
+                                <span>
+                                    ·
+                                </span>
+                                {{ pet['gender']|capitalize }}
+                            </p>
+                            <a class="btn btn-outline btn-full" href="{{ url_for('pet', pet_id=pet['pet_id']) }}">
+                                Meet {{ pet['name'] }} →
+                            </a>
+                        </div>
+                    </article>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <span>
+                    ♡
+                </span>
+                <h3>
+                    No pets found
+                </h3>
+                <p>
+                    Try another filter to meet more furry friends.
+                </p>
+            </div>
+        {% endif %}
+    </section>
 {% endblock %}

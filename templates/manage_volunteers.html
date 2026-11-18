@@ -1,20 +1,62 @@
-{% extends "base.html" %}
-{% block main_content %}
-<h1>Volunteer applications</h1>
-{% for application in applications %}
-<article>
-  <p><strong>{{ application.user_id }}</strong> — {{ application.status }}</p>
-  <p>{{ application.reason }}</p>
-  {% if application.status == "Pending" %}
-  <form method="post" action="{{ url_for('decide_volunteer', application_id=application.application_id, decision='approve') }}">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <button type="submit">Approve</button>
-  </form>
-  <form method="post" action="{{ url_for('decide_volunteer', application_id=application.application_id, decision='reject') }}">
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <button type="submit">Reject</button>
-  </form>
-  {% endif %}
-</article>
-{% else %}<p>No applications.</p>{% endfor %}
+{% extends 'base.html' %}
+{% block title %}
+    Volunteer requests{% endblock %}{% block main_content %}
+    <section class="page-intro container">
+        <span class="eyebrow">
+            ADMIN DASHBOARD
+        </span>
+        <h1>
+            Volunteer requests
+            <span class="accent">
+                .
+            </span>
+        </h1>
+        <p>
+            Welcome new helpers to our rescue community.
+        </p>
+    </section>
+    <section class="container page-section">
+        <div class="volunteer-grid">
+            {% for application in applications %}
+                <article class="volunteer-card">
+                    <div class="volunteer-head">
+                        <h2>
+                            {{ application.user_id }}
+                        </h2>
+                        <span class="status status-{{ application.status|lower }}">
+                            {{ application.status }}
+                        </span>
+                    </div>
+                    <p>
+                        {{ application.reason }}
+                    </p>
+                    {% if application.status == 'Pending' %}
+                        <div class="button-row">
+                            <form method="post" action="{{ url_for('decide_volunteer', application_id=application.application_id, decision='approve') }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    Approve
+                                </button>
+                            </form>
+                            <form method="post" action="{{ url_for('decide_volunteer', application_id=application.application_id, decision='reject') }}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-outline btn-sm">
+                                    Reject
+                                </button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </article>
+            {% else %}
+                <div class="empty-state">
+                    <h2>
+                        No volunteer applications
+                    </h2>
+                    <p>
+                        New requests will appear here.
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
